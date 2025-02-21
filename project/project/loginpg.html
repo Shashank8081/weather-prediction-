@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Prediction App</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: Arial, sans-serif;
+            background: url('https://picsum.photos/1600/900?random') no-repeat center center/cover;
+            transition: background 1s ease-in-out;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 400px;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 30px;
+            background-color: rgba(143, 148, 121, 0.836);
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            text-align: center;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        h1 {
+            font-size: 24px;
+            color: white;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.6);
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            background-color: antiquewhite;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            text-align: center;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(to right, #007BFF, #00C9FF);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: 0.3s;
+        }
+
+        .toggle {
+            margin-top: 10px;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        #error-msg {
+            color: red;
+            font-size: 14px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🌤️ Weather Prediction App</h1>
+        <h2 id="form-title">Sign In</h2>
+
+        <form id="auth-form">
+            <input type="email" id="email" placeholder="Email" required>
+            <input type="password" id="password" placeholder="Password" required>
+            <p id="error-msg"></p>
+            <button type="submit">Sign In</button>
+        </form>
+
+        <p class="toggle" onclick="toggleForm()">Don't have an account? Sign Up</p>
+    </div>
+
+    <script>
+        let isSignUp = false;
+
+        function toggleForm() {
+            isSignUp = !isSignUp;
+            document.getElementById("form-title").innerText = isSignUp ? "Sign Up" : "Sign In";
+            document.querySelector("button").innerText = isSignUp ? "Sign Up" : "Sign In";
+            document.querySelector(".toggle").innerText = isSignUp ? "Already have an account? Sign In" : "Don't have an account? Sign Up";
+        }
+
+        document.getElementById("auth-form").addEventListener("submit", function(event) {
+            event.preventDefault();
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+            const errorMsg = document.getElementById("error-msg");
+
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                errorMsg.innerText = "Invalid email format";
+                errorMsg.style.display = "block";
+                return;
+            }
+            if (password.length < 6) {
+                errorMsg.innerText = "Password must be at least 6 characters";
+                errorMsg.style.display = "block";
+                return;
+            }
+
+            errorMsg.style.display = "none";
+            alert(`${isSignUp ? "Signed Up" : "Signed In"} Successfully`);
+
+            // Redirect to weather page
+            window.location.href = 'weather.html';
+        });
+    </script>
+</body>
+</html>
